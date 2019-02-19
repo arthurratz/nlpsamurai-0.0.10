@@ -1,4 +1,4 @@
-CREATE DATABASE  IF NOT EXISTS `nlp-samurai_db` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */;
+CREATE DATABASE IF NOT EXISTS `nlp-samurai_db`;
 USE `nlp-samurai_db`;
 -- MySQL dump 10.13  Distrib 8.0.13, for Win64 (x86_64)
 --
@@ -28,7 +28,7 @@ CREATE TABLE `actions` (
   `action_id` int(11) NOT NULL AUTO_INCREMENT,
   `action` varchar(255) NOT NULL,
   PRIMARY KEY (`action_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -53,7 +53,7 @@ CREATE TABLE `answers` (
   `answer` blob NOT NULL,
   `url` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`answer_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -81,7 +81,7 @@ CREATE TABLE `concepts` (
   `negative` int(11) NOT NULL,
   `answer_id` int(11) NOT NULL,
   PRIMARY KEY (`concept_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -123,7 +123,7 @@ CREATE TABLE `entities` (
   `entity_id` int(11) NOT NULL AUTO_INCREMENT,
   `entity` varchar(255) NOT NULL,
   PRIMARY KEY (`entity_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -152,9 +152,9 @@ UNLOCK TABLES;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
 /*!50001 SET @saved_col_connection     = @@collation_connection */;
-/*!50001 SET character_set_client      = utf8mb4 */;
-/*!50001 SET character_set_results     = utf8mb4 */;
-/*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
 /*!50001 VIEW `concepts_view` AS select `concepts`.`concept_id` AS `concept_id`,`actions`.`action` AS `action`,`entities`.`entity` AS `entity`,`concepts`.`desc` AS `desc`,`concepts`.`negative` AS `negative`,`answers`.`answer` AS `answer`,`answers`.`url` AS `url` from (((`concepts` join `actions` on((`concepts`.`action_id` = `actions`.`action_id`))) join `entities` on((`concepts`.`entity_id` = `entities`.`entity_id`))) join `answers` on((`concepts`.`answer_id` = `answers`.`answer_id`))) */;
