@@ -1,0 +1,29 @@
+﻿<div class="modal fade" id="addConceptModal" tabindex="-1" role="dialog" aria-labelledby="Add a new concept"
+     aria-hidden="true">
+    <div class="modal-dialog modal-side modal-bottom-right" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addConceptModalLabel">Add a new concept...</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input ng-model="concept.action" class="form-control mr-sm-2" type="text" placeholder="Action" aria-label="Action" autofocus><br />
+                <input ng-model="concept.entity" class="form-control mr-sm-2" type="text" placeholder="Entity" aria-label="Action" autofocus><br />
+                <input ng-model="concept.desc" class="form-control mr-sm-2" type="text" placeholder="Description (i.e. Adjectives)" aria-label="Description (i.e. Adjectives)" autofocus><br />
+                <textarea ng-model="concept.answer" class="form-control rounded-0" id="answer" rows="6" cols="6" placeholder="Answer"></textarea><br />
+                <textarea ng-model="concept.url" class="form-control rounded-0" id="answerUrl" rows="3" cols="6" placeholder="Url"></textarea><br />
+                <span>Is Negative?&nbsp;</span>
+                <select ng-model="concept.negative">
+                    <option value="false" selected>No</option>
+                    <option value="true">Yes</option>
+                </select>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>

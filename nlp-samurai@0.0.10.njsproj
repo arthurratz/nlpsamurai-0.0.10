@@ -1,0 +1,242 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">14.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+    <Name>nlp-samurai@0.0.10</Name>
+    <RootNamespace>nlp-samurai</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>3d57b1f5-8fa0-4664-a725-6ca917dcecff</ProjectGuid>
+    <ProjectHome>
+    </ProjectHome>
+    <StartupFile>server.js</StartupFile>
+    <SearchPath>
+    </SearchPath>
+    <WorkingDirectory>.</WorkingDirectory>
+    <OutputPath>.</OutputPath>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <ProjectTypeGuids>{3AF33F2E-1136-4D97-BBB7-1795711AC8B8};{349c5851-65df-11da-9384-00065b846f21};{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}</ProjectTypeGuids>
+    <NodejsPort>1337</NodejsPort>
+    <StartWebBrowser>true</StartWebBrowser>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="server.js" />
+    <Compile Include="database.js">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="engine.js">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="public\mdb\js\addons\datatables-select.js" />
+    <Compile Include="public\mdb\js\addons\datatables-select.min.js" />
+    <Compile Include="public\mdb\js\addons\datatables.js" />
+    <Compile Include="public\mdb\js\addons\datatables.min.js" />
+    <Compile Include="public\mdb\js\bootstrap.js" />
+    <Compile Include="public\mdb\js\bootstrap.min.js" />
+    <Compile Include="public\mdb\js\compiled-4.7.1.min.js" />
+    <Compile Include="public\mdb\js\jquery-3.3.1.min.js" />
+    <Compile Include="public\mdb\js\mdb.js" />
+    <Compile Include="public\mdb\js\mdb.min.js" />
+    <Compile Include="public\mdb\js\modules\chart.js" />
+    <Compile Include="public\mdb\js\modules\default-file-input.js" />
+    <Compile Include="public\mdb\js\modules\enhanced-modals.js" />
+    <Compile Include="public\mdb\js\modules\forms-free.js" />
+    <Compile Include="public\mdb\js\modules\jquery.easing.js" />
+    <Compile Include="public\mdb\js\modules\scrolling-navbar.js" />
+    <Compile Include="public\mdb\js\modules\velocity.js" />
+    <Compile Include="public\mdb\js\modules\velocity.min.js" />
+    <Compile Include="public\mdb\js\modules\waves.js" />
+    <Compile Include="public\mdb\js\modules\wow.js" />
+    <Compile Include="public\mdb\js\popper.min.js" />
+    <Compile Include="routes\index.js" />
+    <Content Include="database.json" />
+    <Content Include="model\nlp-samular_db.sql" />
+    <Content Include="package.json" />
+    <Content Include="public\images\background.png" />
+    <Content Include="public\images\nlp.png" />
+    <Content Include="public\mdb\css\addons\datatables-select.css" />
+    <Content Include="public\mdb\css\addons\datatables-select.min.css" />
+    <Content Include="public\mdb\css\addons\datatables.css" />
+    <Content Include="public\mdb\css\addons\datatables.min.css" />
+    <Content Include="public\mdb\css\addons\directives.css" />
+    <Content Include="public\mdb\css\addons\directives.min.css" />
+    <Content Include="public\mdb\css\bootstrap.css" />
+    <Content Include="public\mdb\css\bootstrap.min.css" />
+    <Content Include="public\mdb\css\mdb.css" />
+    <Content Include="public\mdb\css\mdb.lite.css" />
+    <Content Include="public\mdb\css\mdb.lite.min.css" />
+    <Content Include="public\mdb\css\mdb.min.css" />
+    <Content Include="public\mdb\css\modules\animations-extended.css" />
+    <Content Include="public\mdb\css\modules\animations-extended.min.css" />
+    <Content Include="public\mdb\css\style.css" />
+    <Content Include="public\mdb\css\style.min.css" />
+    <Content Include="public\mdb\font\roboto\Roboto-Bold.eot" />
+    <Content Include="public\mdb\font\roboto\Roboto-Bold.ttf" />
+    <Content Include="public\mdb\font\roboto\Roboto-Bold.woff" />
+    <Content Include="public\mdb\font\roboto\Roboto-Bold.woff2" />
+    <Content Include="public\mdb\font\roboto\Roboto-Light.eot" />
+    <Content Include="public\mdb\font\roboto\Roboto-Light.ttf" />
+    <Content Include="public\mdb\font\roboto\Roboto-Light.woff" />
+    <Content Include="public\mdb\font\roboto\Roboto-Light.woff2" />
+    <Content Include="public\mdb\font\roboto\Roboto-Medium.eot" />
+    <Content Include="public\mdb\font\roboto\Roboto-Medium.ttf" />
+    <Content Include="public\mdb\font\roboto\Roboto-Medium.woff" />
+    <Content Include="public\mdb\font\roboto\Roboto-Medium.woff2" />
+    <Content Include="public\mdb\font\roboto\Roboto-Regular.eot" />
+    <Content Include="public\mdb\font\roboto\Roboto-Regular.ttf" />
+    <Content Include="public\mdb\font\roboto\Roboto-Regular.woff" />
+    <Content Include="public\mdb\font\roboto\Roboto-Regular.woff2" />
+    <Content Include="public\mdb\font\roboto\Roboto-Thin.eot" />
+    <Content Include="public\mdb\font\roboto\Roboto-Thin.ttf" />
+    <Content Include="public\mdb\font\roboto\Roboto-Thin.woff" />
+    <Content Include="public\mdb\font\roboto\Roboto-Thin.woff2" />
+    <Content Include="public\mdb\img\lightbox\default-skin.png" />
+    <Content Include="public\mdb\img\lightbox\default-skin.svg" />
+    <Content Include="public\mdb\img\lightbox\preloader.gif" />
+    <Content Include="public\mdb\img\overlays\01.png" />
+    <Content Include="public\mdb\img\overlays\02.png" />
+    <Content Include="public\mdb\img\overlays\03.png" />
+    <Content Include="public\mdb\img\overlays\04.png" />
+    <Content Include="public\mdb\img\overlays\05.png" />
+    <Content Include="public\mdb\img\overlays\06.png" />
+    <Content Include="public\mdb\img\overlays\07.png" />
+    <Content Include="public\mdb\img\overlays\08.png" />
+    <Content Include="public\mdb\img\overlays\09.png" />
+    <Content Include="public\mdb\img\svg\arrow_left.svg" />
+    <Content Include="public\mdb\img\svg\arrow_right.svg" />
+    <Content Include="public\mdb\scss\addons\_datatables-select.scss" />
+    <Content Include="public\mdb\scss\addons\_datatables.scss" />
+    <Content Include="public\mdb\scss\addons\_directives.scss" />
+    <Content Include="public\mdb\scss\core\bootstrap\_functions.scss" />
+    <Content Include="public\mdb\scss\core\bootstrap\_variables.scss" />
+    <Content Include="public\mdb\scss\core\_colors.scss" />
+    <Content Include="public\mdb\scss\core\_global.scss" />
+    <Content Include="public\mdb\scss\core\_helpers.scss" />
+    <Content Include="public\mdb\scss\core\_masks.scss" />
+    <Content Include="public\mdb\scss\core\_mixins.scss" />
+    <Content Include="public\mdb\scss\core\_typography.scss" />
+    <Content Include="public\mdb\scss\core\_variables.scss" />
+    <Content Include="public\mdb\scss\core\_waves.scss" />
+    <Content Include="public\mdb\scss\free\modules\animations-extended\animations-extended.scss" />
+    <Content Include="public\mdb\scss\free\modules\animations-extended\_module.scss" />
+    <Content Include="public\mdb\scss\free\_animations-basic.scss" />
+    <Content Include="public\mdb\scss\free\_badges.scss" />
+    <Content Include="public\mdb\scss\free\_buttons.scss" />
+    <Content Include="public\mdb\scss\free\_cards.scss" />
+    <Content Include="public\mdb\scss\free\_carousels.scss" />
+    <Content Include="public\mdb\scss\free\_depreciated.scss" />
+    <Content Include="public\mdb\scss\free\_dropdowns.scss" />
+    <Content Include="public\mdb\scss\free\_footers.scss" />
+    <Content Include="public\mdb\scss\free\_forms.scss" />
+    <Content Include="public\mdb\scss\free\_input-group.scss" />
+    <Content Include="public\mdb\scss\free\_list-group.scss" />
+    <Content Include="public\mdb\scss\free\_loader.scss" />
+    <Content Include="public\mdb\scss\free\_modals.scss" />
+    <Content Include="public\mdb\scss\free\_msc.scss" />
+    <Content Include="public\mdb\scss\free\_navbars.scss" />
+    <Content Include="public\mdb\scss\free\_pagination.scss" />
+    <Content Include="public\mdb\scss\free\_steppers.scss" />
+    <Content Include="public\mdb\scss\free\_switch.scss" />
+    <Content Include="public\mdb\scss\free\_tables.scss" />
+    <Content Include="public\mdb\scss\mdb.lite.scss" />
+    <Content Include="public\mdb\scss\mdb.scss" />
+    <Content Include="public\mdb\scss\_custom-skin.scss" />
+    <Content Include="public\mdb\scss\_custom-styles.scss" />
+    <Content Include="public\mdb\scss\_custom-variables.scss" />
+    <Content Include="public\stylesheets\main.css" />
+    <Content Include="README.md" />
+    <Content Include="views\answers.html">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="views\concepts.html">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="views\confirm.html">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="views\index.html" />
+    <Content Include="views\updates.html">
+      <SubType>Code</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="model\" />
+    <Folder Include="public\" />
+    <Folder Include="public\images\" />
+    <Folder Include="public\javascripts\" />
+    <Folder Include="public\mdb\" />
+    <Folder Include="public\mdb\css\" />
+    <Folder Include="public\mdb\css\addons\" />
+    <Folder Include="public\mdb\css\modules\" />
+    <Folder Include="public\mdb\font\" />
+    <Folder Include="public\mdb\font\roboto\" />
+    <Folder Include="public\mdb\img\" />
+    <Folder Include="public\mdb\img\lightbox\" />
+    <Folder Include="public\mdb\img\overlays\" />
+    <Folder Include="public\mdb\img\svg\" />
+    <Folder Include="public\mdb\js\" />
+    <Folder Include="public\mdb\js\addons\" />
+    <Folder Include="public\mdb\js\modules\" />
+    <Folder Include="public\mdb\scss\" />
+    <Folder Include="public\mdb\scss\addons\" />
+    <Folder Include="public\mdb\scss\core\" />
+    <Folder Include="public\mdb\scss\core\bootstrap\" />
+    <Folder Include="public\mdb\scss\free\" />
+    <Folder Include="public\mdb\scss\free\modules\" />
+    <Folder Include="public\mdb\scss\free\modules\animations-extended\" />
+    <Folder Include="public\stylesheets\" />
+    <Folder Include="routes\" />
+    <Folder Include="views\" />
+  </ItemGroup>
+  <!-- Do not delete the following Import Project.  While this appears to do nothing it is a marker for setting TypeScript properties before our import that depends on them. -->
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="False" />
+  <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsTools.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:48022/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>True</UseCustomServer>
+          <CustomServerUrl>http://localhost:1337</CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}" User="">
+        <WebProjectProperties>
+          <StartPageUrl>
+          </StartPageUrl>
+          <StartAction>CurrentPage</StartAction>
+          <AspNetDebugging>True</AspNetDebugging>
+          <SilverlightDebugging>False</SilverlightDebugging>
+          <NativeDebugging>False</NativeDebugging>
+          <SQLDebugging>False</SQLDebugging>
+          <ExternalProgram>
+          </ExternalProgram>
+          <StartExternalURL>
+          </StartExternalURL>
+          <StartCmdLineArguments>
+          </StartCmdLineArguments>
+          <StartWorkingDirectory>
+          </StartWorkingDirectory>
+          <EnableENC>False</EnableENC>
+          <AlwaysStartWebServerOnDebug>False</AlwaysStartWebServerOnDebug>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

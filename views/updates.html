@@ -1,0 +1,29 @@
+﻿<div class="modal fade" id="conceptEditModal" tabindex="-1" role="dialog" aria-labelledby="Edit Concept" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" ng-controller="conceptsViewCtrl">
+            <div class="modal-header">
+                <h5 class="modal-title" id="conceptEditViewModalLabel">Edit Concept...</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" name="concept_id" value="{{concept.id}}" />
+                <input type="text" ng-model="concept.action" class="form-control rounded-0" value="{{concept.action}}" /><br />
+                <input type="text" ng-model="concept.entity" class="form-control rounded-0" value="{{concept.entity}}" /><br />
+                <input type="text" ng-model="concept.desc" class="form-control rounded-0" id="desc" value="{{concept.desc}}"><br />
+                <textarea ng-model="concept.answer" class="form-control rounded-0" id="answer" rows="6" cols="6">{{ concept.answer }}</textarea><br />
+                <textarea ng-model="concept.url" class="form-control rounded-0" id="answerUrl" rows="3" cols="6">{{concept.url}}</textarea><br />
+                <span>Is Negative?</span>
+                <select ng-model="concept.negative">
+                    <option value="false">No</option>
+                    <option value="true">Yes</option>
+                </select>
+            </div>
+            <div class="modal-footer flex-center">
+                <button class="btn btn-outline-danger" data-dismiss="modal">Save</button>
+                <button class="btn btn-danger waves-effect" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,348 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>NLP-Samurai@0.0.10 Demo</title>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
+  <!-- Bootstrap core CSS -->
+  <link href="mdb/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Material Design Bootstrap -->
+  <link href="mdb/css/mdb.min.css" rel="stylesheet">
+  <!-- Your custom styles (optional) -->
+  <link href="stylesheets/main.css" rel="stylesheet">
+  <!-- MDB core jQuery -->
+  <script type="text/javascript" src="mdb/js/jquery-3.3.1.min.js"></script>
+  <!-- Angular.js core -->
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.23/angular.min.js"></script>
+
+  <script type="text/javascript">
+     var concepts = angular.module('concepts', []);
+      concepts.controller('conceptsViewCtrl', function ($scope, $http) {
+         $http.post("/")
+             .then(function (response) {
+                 $scope.model = response.data['model'];
+              });
+
+         $scope.scrollIntoView = function (elem, ratio) {
+             var answ_render_offset =
+                 $(elem).offset();
+
+             answ_render_offset.left -= ratio;
+             answ_render_offset.top -= ratio;
+
+             $('html, body').animate({
+                 scrollTop: answ_render_offset.top,
+                 scrollLeft: answ_render_offset.left
+             });
+         }
+
+         $('#navbarSupportedContent-7 a[data-toggle="tab"]').
+             bind('click', function (e) {
+                e.preventDefault();
+                if ($(this).attr("href") == "#smdb") {
+                    $scope.scrollIntoView("#smdb_renderer", 20);
+                }
+         });
+
+         $scope.onSendInquiry = function (inquiry) {
+             if ($("#responses").display == "block") {
+                 $("responses").hide();
+             }
+
+             $http.post('/inquiry', { 'inquiry': inquiry, 'model': $scope.model }).then((results) => {
+                 $scope.model.responses = results["data"]["intents"].map(function (obj) {
+                     return {
+                         'action': obj["intent"]["action"],
+                         'entity': obj["intent"]["ent"],
+                         'response': obj["response"]
+                     };
+                 });
+
+                 $("#responses").show();
+                 $scope.scrollIntoView("#answers_renderer", 0);
+             });       
+         }
+
+         $scope.onAddConceptModal = function () {
+             $scope.add_concept = true;
+         }
+
+         $scope.onViewAnswer = function (answer, url) {
+             $scope.answer_show = true;
+             $scope.answer = answer; $scope.url = url;
+         }
+
+         $scope.onUpdateConceptModal = function (concept) {
+             $scope.concept = concept;
+             $scope.concept_orig =
+                 angular.copy($scope.concept);
+             $scope.update_concept = true;
+         }
+
+         $scope.onConfirmRemovalModal = function (concept_id) {
+             $scope.concept_id = concept_id;
+             $scope.confirm_removal = true;
+         }
+
+         $scope.onRemoveConcept = function () {
+             $scope.model = $scope.model.filter(function (obj) {
+               return obj['id'] != $scope.concept_id;
+             });
+         }
+      });
+
+      concepts.directive('addNewConceptModal', function () {
+          return {
+              restrict: 'EA',
+              link: function (scope, element, attributes) {
+                  scope.$watch('add_concept', function (add_concept) {
+                      element.find('.modal').modal(add_concept ? 'show' : 'hide');
+                  });
+
+                  element.on('shown.bs.modal', function () {
+                      scope.$apply(function () {
+                          scope.concept = {};
+                          scope.concept.negative = 'false';
+                          scope.add_concept = true;
+                      });
+                  });
+
+                  element.on('hidden.bs.modal', function () {
+                      scope.$apply(function () {
+                          scope.model.push(scope.concept);
+                          scope.add_concept = false;
+                      });
+                  });
+              },
+              templateUrl: '/concepts'
+          };
+      });
+
+      concepts.directive('answerViewModal', function () {
+          return {
+              restrict: 'E',
+              link: function (scope, element, attributes) {
+                  scope.$watch('answer_show', function (answer_show) {
+                      element.find('.modal').modal(answer_show ? 'show' : 'hide');
+                  });
+
+                  element.on('shown.bs.modal', function () {
+                      scope.$apply(function () {
+                          scope.answer_show = true;
+                      });
+                  });
+
+                  element.on('hidden.bs.modal', function () {
+                      scope.$apply(function () {
+                          scope.answer_show = false;
+                      });
+                  });
+              },
+              templateUrl: '/answers'
+          };
+      });
+
+      concepts.directive('updateConceptModal', function () {
+          return {
+              restrict: 'EA',
+              link: function (scope, element, attributes) {
+                  scope.$watch('update_concept', function (update_concept) {
+                      element.find('.modal').modal(update_concept ? 'show' : 'hide');
+                  });
+
+                  element.on('shown.bs.modal', function () {
+                      scope.$apply(function () {
+                          scope.update_concept = true;
+                      });
+                  });
+
+                  element.on('hidden.bs.modal', function () {
+                      scope.$apply(function () {
+                          scope.update_concept = false;
+                          scope.model[scope.concept_orig.entity].entity = scope.concept.entity;
+                          scope.model[scope.concept_orig.action].action = scope.concept.action;
+                      });
+                  });
+              },
+              templateUrl: '/modify'
+          };
+      });
+
+      concepts.directive('confirmRemovalModal', function () {
+          return {
+              restrict: 'EA',
+              link: function (scope, element, attributes) {
+                  scope.$watch('confirm_removal', function (confirm_removal) {
+                      element.find('.modal').modal(confirm_removal ? 'show' : 'hide');
+                  });
+
+                  element.on('shown.bs.modal', function () {
+                      scope.$apply(function () {
+                          scope.confirm_removal = true;
+                      });
+                  });
+
+                  element.on('hidden.bs.modal', function () {
+                      scope.$apply(function () {
+                          $scope.model.splice($scope.concept_id, 1);
+                          scope.confirm_removal = false;
+                      });
+                  });
+              },
+              templateUrl: '/confirm'
+          };
+      });
+</script>
+</head>
+<body ng-app="concepts" ng-controller="conceptsViewCtrl"> 
+ <header>
+  <!--Navbar-->
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top scrolling-navbar">
+    <div class="container">
+      <a class="navbar-brand" href="#">
+        <strong>NLP-Samurai@0.0.10 (Node.js Demo)</strong>
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-7" aria-controls="navbarSupportedContent-7" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent-7">
+       <ul class="nav navbar-nav mr-auto" id="myTab" role="tablist">
+        <li class="nav-item">
+         <a class="nav-link active" id="nlp-tab" data-toggle="tab" href="#nlp" role="tab" aria-controls="nlp"
+           aria-selected="true">Natural Language Processing</a>
+        </li>
+        <li class="nav-item">
+         <a class="nav-link" id="smdb-tab" data-toggle="tab" href="#smdb" role="tab" aria-controls="smdb"
+           aria-selected="false">Semantic Knowledge Database</a>
+        </li>
+       </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- Full Page Intro -->
+  <div class="view" style="background-image: url('images/background.png'); background-repeat: no-repeat; background-size: cover; background-position: center center;">
+    <!-- Mask & flexbox options-->
+    <div class="mask rgba-gradient d-flex justify-content-center align-items-center">
+      <!-- Content -->
+      <div class="container">
+        <!--Grid row-->
+        <div class="row">
+          <!--Grid column-->
+          <div class="col-md-6 white-text text-center text-md-left mt-xl-5 mb-5 wow fadeInLeft" data-wow-delay="0.3s">
+            <h2 class="h2-responsive font-weight-bold mt-sm-5">Natural Language Processing Engine</h2>
+            <hr class="hr-light">
+            <h6 class="mb-4">Introducing NLP-Samurai@0.0.10 Natural Language Processing Engine - a Node.js framework that allows to find and recongize intents and grammar predicates in human text messages, based on the corpus of 'useful' concepts stored in sematic knowledge database, providing correct answers to the most of frequently asked questions and other inquiries...<br/><br/>Author: Arthur V. Ratz @ CodeProject (CPOL License)</h6><br>
+          </div>
+          <!--Grid column-->
+          <!--Grid column-->
+          <div class="col-md-6 col-xl-5 mt-xl-5 wow fadeInRight" data-wow-delay="0.3s">
+            <img src="./images/nlp.png" alt="" class="img-fluid">
+          </div>
+          <!--Grid column-->
+        </div>
+        <!--Grid row-->
+      </div>
+      <!-- Content -->
+    </div>
+    <!-- Mask & flexbox options-->
+  </div>
+  <!-- Full Page Intro -->
+ </header>
+ <!-- Main navigation -->
+ <!--Main Layout-->
+ <main>
+   <div id="smdb_renderer"></div>
+   <div class="container">
+    <div class="tab-content">
+     <div class="tab-pane active" id="nlp" role="tabpanel" aria-labelledby="">
+         <!--Grid row-->
+         <div class="row py-5">
+             <!--Grid column-->
+             <div class="col-md-12">
+                 <h2>What would you like to know about Slack Hub?</h2><br />
+                 <div class="md-form my-0">
+                     <div class="input-group">
+                         <input ng-model="inquiry" id="inquiry" class="form-control mr-sm-2" type="text" placeholder="Type In Your Inquiry Here..." aria-label="Type In Your Inquiry Here..." autofocus>
+                         <a data-ng-click="onSendInquiry(inquiry)"><i class="fas fa-angle-double-right fa-2x"></i></a>
+                     </div>
+                     <p style="font-size:12px">For example: "I want to create a workspace and channel, and also to find out how to migrate company to Slack..."</p>
+                 </div>
+                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                 <div id="responses" style="display: none">
+                 <table class="table">
+                  <tr ng-repeat="resp in model.responses">
+                   <td>
+                    <div class="card">
+                     <div class="card-body">
+                       <h3><b>{{resp.action}}&nbsp;{{resp.entity}}</b></h3><br/>
+                       {{resp.response.answer}}&nbsp;Visit:&nbsp;<a href="{{resp.response.url}}" style="color: blue">{{resp.response.url}}</a>
+                     </div>
+                    </div>
+                   </td>
+                  </tr>
+                 </table>
+                 </div>
+                 <div id="answers_renderer"></div>
+             </div>
+         </div>
+     </div>
+     <div class="tab-pane" id="smdb" role="tabpanel" aria-labelledby="">
+         <div class="row py-5">
+             <!--Grid column-->
+             <div class="col-md-12">
+                 <h2>Semantic Knowledge Database...</h2><br />
+             </div>
+             <div class="col-md-12 text-md-right">
+              <button data-ng-click="onAddConceptModal()" type="button" class="btn btn-primary">Add A New Concept</button>
+             </div>
+             <div class="col-md-12">
+                 <table class="table table-hover">
+                     <thead>
+                         <tr>
+                             <th>#</th>
+                             <th>Action</th>
+                             <th>Entity</th>
+                             <th>Description</th>
+                             <th>Is Negative?</th>
+                             <th>&nbsp;</th>
+                         </tr>
+                     </thead>
+                     <tbody>
+                         <tr ng-repeat="concept in model track by concept.id">
+                             <td>{{ $index + 1 }}</td>
+                             <td>{{ concept.action }}</td>
+                             <td><b>{{ concept.entity }}</b></td>
+                             <td>{{ concept.desc }}</td>
+                             <td>{{ concept.negative }}</td>
+                             <td>
+                                 <a data-ng-click="onViewAnswer(concept.answer, concept.url)" style="color:blue"><b>View Answer</b></a>&nbsp;|&nbsp;
+                                 <a data-ng-click="onUpdateConceptModal(concept)" style="color:green"><b>Modify</b></a>&nbsp;|&nbsp;
+                                 <a data-ng-click="onConfirmRemovalModal(concept.id)" style="color:red"><b>Remove</b></a>
+                             </td>
+                     </tbody>
+                 </table>
+                 <add-new-concept-modal></add-new-concept-modal>
+                 <answer-view-modal></answer-view-modal>
+                 <update-concept-modal></update-concept-modal>
+                 <confirm-removal-modal></confirm-removal-modal>
+             </div>
+         </div>
+     </div>
+    </div>
+   </div>
+</main>
+  <!-- SCRIPTS -->
+  <!-- Bootstrap tooltips -->
+  <script type="text/javascript" src="mdb/js/popper.min.js"></script>
+  <!-- Bootstrap core JavaScript -->
+  <script type="text/javascript" src="mdb/js/bootstrap.min.js"></script>
+  <!-- MDB core JavaScript -->
+  <script type="text/javascript" src="mdb/js/mdb.js"></script>
+  <!--Main Layout--> 
+  <script type="text/javascript" src="mdb/js/compiled-4.7.1.min.js"></script><script type="text/javascript">(function runJS() {new WOW().init();})();</script>
+ </body>
+</html>
